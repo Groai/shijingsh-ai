@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .bill-container {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm;
+            margin: auto;
+        }
+        .header-section, .customer-section, .details-section, .signature-section {
+            margin-bottom: 20px;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table th, .table td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        @media print {
+            .bill-container {
+                padding: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bill-container">
+        <div class="header-section">
+            <h2>AL MUTHERY GARAGE</h2>
+            <p>AL KHOR DOHA-QATAR</p>
+            <p>Email: info@almuthery.com</p>
+            <!-- More header content -->
+        </div>
+        <div class="customer-section">
+            <!-- Customer Details -->
+        </div>
+        <div class="details-section">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th class="text-right">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop through each part and display it in a row -->
+                    {% for part in parts %}
+                    <tr>
+                        <td>{{ part.description }}</td>
+                        <td class="text-right">{{ part.unit_price }}</td>
+                    </tr>
+                    {% endfor %}
+                    <!-- Display labor charge -->
+                    <tr>
+                        <td>Labour Charge</td>
+                        <td class="text-right">{{ repair_job.labor_charge }}</td>
+                    </tr>
+                    <!-- Display total -->
+                    <tr>
+                        <td class="text-right">Total</td>
+                        <td class="text-right">{{ repair_job.total }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="signature-section">
+            <!-- Signature and Footer Content -->
+        </div>
+    </div>
+</body>
+</html>

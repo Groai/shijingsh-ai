@@ -1,0 +1,58 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Repair Details for Vehicle: {{ vehicle.registration_number }}</h4>
+
+                {% for job in repair_jobs %}
+                    <h5>Repair Job on {{ job.date }} by {{ job.technician_name }}</h5>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Part Number</th>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Labor Cost</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for part in parts %}
+                                    <tr>
+                                        <td>{{ part.part_number }}</td>
+                                        <td>{{ part.description }}</td>
+                                        <td>{{ part.quantity }}</td>
+                                        <td>{{ part.unit_price }}</td>
+                                        <td>{{ part.labor_cost }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endfor %}
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" id="totals">
+                            <label>Sub Total:</label>
+                            <input type="text" class="form-control" value="{{ repair_cost.subtotal }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>TOTAL:</label>
+                            <input type="text" class="form-control" value="{{ repair_cost.total }}" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="window.print()" class="btn btn-primary">Print this page</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

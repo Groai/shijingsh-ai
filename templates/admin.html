@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Repair Job Entry</title>
+    <style>
+        .partEntry { margin-bottom: 10px; }
+        .partEntry input { margin-right: 5px; }
+        #totals { margin-top: 20px; }
+        #totals input { margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Repair Job Entry</h1>
+    <form method="post" id="repairForm">
+        {% csrf_token %}
+        
+        <div>
+            <label for="technician_name">Technician Name:</label>
+            <input type="text" id="technician_name" name="technician_name" required>
+        </div>
+        
+        <div>
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+        </div>
+
+        <h2>Part Details</h2>
+        <div id="partsContainer">
+            <!-- Parts entries will be added here by JavaScript -->
+        </div>
+
+        <div id="totals">
+            <label for="subtotal">Sub Total:</label>
+            <input type="text" id="subtotal" name="subtotal" readonly>
+
+            <label for="total">TOTAL:</label>
+            <input type="text" id="total" name="total" readonly>
+        </div>
+
+        <button type="button" onclick="addPartEntry()">Add Part</button>
+        <input type="submit" value="Submit Repair Job">
+    </form>
+
+    <script>
+        let partIndex = 0;
+
+        function addPartEntry() {
+            partIndex++;
+            const container = document.getElementById('partsContainer');
+            const newPartHtml = `
+                <div class="partEntry" id="part_${partIndex}">
+                    <input type="text" placeholder="Part No." name="part_numbers[]" required>
+                    <input type="text" placeholder="Part Description" name="descriptions[]" required>
+                    <input type="number" placeholder="Quantity" name="quantities[]" oninput="updateTotals()" required>
+                    <input type="text" placeholder="Unit Price" name="unit_prices[]" oninput="updateTotals()" required>
+                    <input type="text" placeholder="Labor Cost" name="labor_costs[]" oninput="updateTotals()" required>
+                    <button type="button" onclick="removePartEntry('part_${partIndex}')">Remove</button>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', newPartHtml);
+            updateTotals(); // Update totals whenever a new part is added
+        }
+
+        function removePartEntry(partId) {
+            const partEntry = document.getElementById(partId);
+            partEntry.remove();
+            updateTotals(); // Update totals whenever a part is removed
+        }
+
+        function updateTotals() {
+            const quantities = document.getElementsByName('quantities[]');
+            const unitPrices = document.getElementsByName('unit_prices[]');
+            const laborCosts = document.getElementsByName('labor_costs[]');
+            let subtotal = 0;
+            quantities.forEach((quantityInput, index) => {
+                const quantity = parseFloat(quantityInput.value) || 0;
+                const unitPrice = parseFloat(unitPrices[index].value) || 0;
+                const laborCost = parseFloat(laborCosts[index].value) || 0;
+                subtotal += (quantity * unitPrice) + laborCost;
+            });
+            document.getElementById('subtotal').value = subtotal.toFixed(2);
+            document.getElementById('total').value = subtotal.toFixed(2); // Update this if you have additional costs
+        }
+
+        // Initial part entry
+        addPartEntry();
+    </script>
+</body>
+</html>

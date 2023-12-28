@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Horizontal Two column</h4>
+        <form class="form-sample">
+          <p class="card-description">
+            Personal info
+          </p>
+          <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" class="form-control" placeholder="First Input">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Car Registration Number</label>
+                    <input type="text" class="form-control" placeholder="Car Reg Number">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Year</label>
+                    <input type="number" class="form-control" placeholder="Year">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Mileage</label>
+                    <input type="number" class="form-control" placeholder="Mileage">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Time In</label>
+                    <input type="time" class="form-control" placeholder="Time In">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Car Make</label>
+                    <input type="text" class="form-control" placeholder="Car Make">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Car Model</label>
+                    <input type="text" class="form-control" placeholder="Car Model">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Car Color</label>
+                    <input type="text" class="form-control" placeholder="Car Color">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" class="form-control" placeholder="Customer Name">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Customer Contact No</label>
+                    <input type="text" class="form-control" placeholder="Customer Contact No">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Engine Number</label>
+                    <input type="text" class="form-control" placeholder="Engine Number">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>VIN No</label>
+                    <input type="text" class="form-control" placeholder="VIN No">
+                </div>
+            </div>
+        </div>
+        
+          <p class="card-description">
+            Address
+          </p>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Address 1</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">State</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Address 2</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Postcode</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">City</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Country</label>
+                <div class="col-sm-9">
+                  <select class="form-control">
+                    <option>America</option>
+                    <option>Italy</option>
+                    <option>Russia</option>
+                    <option>Britain</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

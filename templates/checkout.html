@@ -1,0 +1,115 @@
+{% extends 'base1.html' %}
+{% block content %}
+<div class="">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Repair Job Entry for {{ vehicle.registration_number }}</h4>
+                <p class="card-description">Enter the details of the repair job below</p>
+                <form method="post" class="forms-sample" id="repairForm">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="technician_name">Technician Name:</label>
+                                <input type="text" class="form-control" id="technician_name" name="technician_name"
+                                    placeholder="Technician Name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="date">Date:</label>
+                                <input type="date" class="form-control" id="date" name="date" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5>Part Details</h5>
+                    <div id="partsContainer">
+                        <!-- Parts entries will be added here by JavaScript -->
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group" id="totals">
+                                <label for="subtotal">Sub Total:</label>
+                                <input type="text" class="form-control" id="subtotal" name="subtotal" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="total">TOTAL:</label>
+                                <input type="text" class="form-control" id="total" name="total" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <button type="button" class="btn btn-outline-warning btn-fw" onclick="addPartEntry()">Add Part</button>
+                    <button type="submit" class="btn btn-success">Submit Repair Job</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let partIndex = 0;
+
+    function addPartEntry() {
+        partIndex++;
+        const container = document.getElementById('partsContainer');
+        const newPartHtml = `
+    <div class="row partEntry" id="part_${partIndex}">
+        <div class="col-md-2">
+            <input type="text" class="form-control" placeholder="Part No." name="part_numbers[]" required>
+        </div>
+        <div class="col-md-2">
+            <input type="text" class="form-control" placeholder="Part Description" name="descriptions[]" required>
+        </div>
+        <div class="col-md-2">
+            <input type="number" class="form-control" placeholder="Quantity" name="quantities[]" oninput="updateTotals()" required>
+        </div>
+        <div class="col-md-2">
+            <input type="text" class="form-control" placeholder="Unit Price" name="unit_prices[]" oninput="updateTotals()" required>
+        </div>
+        <div class="col-md-2">
+            <input type="text" class="form-control" placeholder="Labor Cost" name="labor_costs[]" oninput="updateTotals()" required>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-danger" onclick="removePartEntry('part_${partIndex}')">Remove</button>
+        </div>
+    </div>
+`;
+        container.insertAdjacentHTML('beforeend', newPartHtml);
+        updateTotals(); // Update totals whenever a new part is added
+    }
+
+    function removePartEntry(partId) {
+        const partEntry = document.getElementById(partId);
+        partEntry.remove();
+        updateTotals(); // Update totals whenever a part is removed
+    }
+
+    function updateTotals() {
+        const quantities = document.getElementsByName('quantities[]');
+        const unitPrices = document.getElementsByName('unit_prices[]');
+        const laborCosts = document.getElementsByName('labor_costs[]');
+        let subtotal = 0;
+        quantities.forEach((quantityInput, index) => {
+            const quantity = parseFloat(quantityInput.value) || 0;
+            const unitPrice = parseFloat(unitPrices[index].value) || 0;
+            const laborCost = parseFloat(laborCosts[index].value) || 0;
+            subtotal += (quantity * unitPrice) + laborCost;
+        });
+        document.getElementById('subtotal').value = subtotal.toFixed(2);
+        document.getElementById('total').value = subtotal.toFixed(2); // Update this if you have additional costs
+    }
+
+    // Initial part entry
+    addPartEntry();
+</script>
+{% endblock %}
+
+
+<button type="button" class="btn btn-outline-warning btn-fw">Warning</button>
